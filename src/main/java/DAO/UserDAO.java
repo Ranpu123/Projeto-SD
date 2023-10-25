@@ -20,7 +20,6 @@ public class UserDAO extends GenericDAO<User> {
 
         return listar(sql, resultSet -> {
             User user = new User();
-            user.setId(resultSet.getInt("id"));
             user.setRegistro(resultSet.getInt("registro"));
             user.setNome(resultSet.getString("nome"));
             user.setEmail(resultSet.getString("email"));
@@ -32,35 +31,32 @@ public class UserDAO extends GenericDAO<User> {
     }
 
     public void incluirUsuario(User user) throws SQLException {
-        String sql = "INSERT INTO usuarios (nome,email,registro,senha,tipo) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO usuarios (nome,email,senha,tipo) VALUES (?, ?, ?, ?)";
 
         incluir(sql, statement -> {
             statement.setString(1, user.getNome());
             statement.setString(2, user.getEmail());
-            statement.setInt(3, user.getRegistro());
-            statement.setString(4, user.getSenha());
-            statement.setBoolean(5, user.isTipo());
+            statement.setString(3, user.getSenha());
+            statement.setBoolean(4, user.isTipo());
         });
     }
 
     public void removerUsuario(User user) throws SQLException {
-        String sql = "DELETE FROM usuarios WHERE id = ?";
+        String sql = "DELETE FROM usuarios WHERE registro = ?";
 
         remover(sql, statement->{
-            statement.setInt(1,user.getId());
+            statement.setInt(1,user.getRegistro());
         });
     }
 
     public void atualizarUsuario(User user) throws SQLException {
-        String sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ?, registro = ?, tipo = ?, token = ?  WHERE id = ?";
+        String sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ?, tipo = ?  WHERE registro = ?";
         atualizar(sql, statement -> {
             statement.setString(1,user.getNome());
             statement.setString(2,user.getEmail());
             statement.setString(3,user.getSenha());
-            statement.setInt(4,user.getRegistro());
-            statement.setBoolean(5,user.isTipo());
-            statement.setString(6,user.getToken());
-            statement.setInt(7, user.getId());
+            statement.setBoolean(4,user.isTipo());
+            statement.setInt(5,user.getRegistro());
         });
     }
     
@@ -69,7 +65,6 @@ public class UserDAO extends GenericDAO<User> {
         
         return retornar(sql, (resultSet) -> {
             User user = new User();
-            user.setId(resultSet.getInt("id"));
             user.setRegistro(resultSet.getInt("registro"));
             user.setNome(resultSet.getString("nome"));
             user.setEmail(resultSet.getString("email"));

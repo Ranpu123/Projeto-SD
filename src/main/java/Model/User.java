@@ -9,7 +9,6 @@ package Model;
  * @author vinic
  */
 public class User {
-    private int id;
     private int registro;
     private String email;
     private String senha;
@@ -18,7 +17,6 @@ public class User {
     private String token;
 
     public User(int registro, String email, String senha, String nome, boolean tipo, int id, String token) {
-        this.id = id;
         this.registro = registro;
         this.email = email;
         this.senha = senha;
@@ -27,8 +25,7 @@ public class User {
         this.token = token;
     }
 
-    public User(int registro, String email, String senha, String nome, boolean tipo) {
-        this.registro = registro;
+    public User(String email, String senha, String nome, boolean tipo) {
         this.email = email;
         this.senha = senha;
         this.nome = nome;
@@ -78,14 +75,6 @@ public class User {
 
     public void setTipo(boolean tipo) {
         this.tipo = tipo;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getToken() {

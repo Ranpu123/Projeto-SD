@@ -1,23 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Requests;
 
 import Model.Header;
 import com.google.gson.JsonObject;
+import jakarta.validation.constraints.NotNull;
 
-/**
- *
- * @author vinic
- */
 public class LogoutRequest extends Request<LogoutRequest.Payload>{
     
-    public LogoutRequest(String token){
+    public LogoutRequest(@NotNull String token){
         super(new Header(token, RequestOperations.LOGOUT),new Payload());
     }
     
-    public LogoutRequest(Header header) {
+    public LogoutRequest(@NotNull Header header) {
         super(header, null);
     }
     

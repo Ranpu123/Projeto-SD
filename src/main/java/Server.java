@@ -85,6 +85,7 @@ public class Server extends Thread {
                 out.println(jsonResponse);
                 
                 if(response instanceof LogoutResponse){
+                    System.out.println("Due to Logout request, closing thread: "+this.getName());
                     break;
                 }
             }

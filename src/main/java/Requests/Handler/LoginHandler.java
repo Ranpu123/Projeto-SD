@@ -19,17 +19,22 @@ import jwt.JwtHelper;
 import Exception.ServerResponseException;
 import Exception.BadRequestException;
 import Exception.ResourceNotFoundException;
+import Misc.ConstraintViolated;
+import Misc.ValidationHelper;
 
 /**
  *
  * @author vinic
  */
 public class LoginHandler {
-    public static Response<?> handleLogin(String jsonRequest)throws ServerResponseException{
+    public static Response<?> handle(String jsonRequest)throws ServerResponseException{
         Gson gson = new Gson();
         
         try {
             LoginRequest req = gson.fromJson(jsonRequest, LoginRequest.class);
+            
+            ValidationHelper.validate(req);
+            
             UserController controller = new UserController(Database.getConnection());
             
             User logado = controller.login(req.getPayload().getEmail(), req.getPayload().getSenha());
@@ -47,6 +52,8 @@ public class LoginHandler {
             throw new BadRequestException(e.getMessage());
         } catch (SQLException e){
             throw new BadRequestException(500,"Internal Server error: "+e.getMessage());
+        }catch(ConstraintViolated e){
+            throw new BadRequestException(e.getMessage());
         }
     }
 }

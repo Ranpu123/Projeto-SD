@@ -6,9 +6,11 @@ package Requests.Handler;
 
 import Controller.UserController;
 import Exception.*;
+import Misc.ConstraintViolated;
 import Misc.Database;
 import Misc.ValidateAdmin;
 import Misc.ValidateToken;
+import Misc.ValidationHelper;
 import Model.User;
 import Response.Response;
 import Requests.AdminCreateUserRequest;
@@ -31,6 +33,9 @@ public class AdminCreateUserHandler{
         
         try {
             Request<AdminCreateUserRequest.Payload> req = gson.fromJson(jsonRequest, AdminCreateUserRequest.class);
+            
+            ValidationHelper.validate(req);
+            
             UserController controller = new UserController(Database.getConnection());
             
             if (req == null || req.getHeader() == null || req.getPayload() == null){
@@ -40,19 +45,8 @@ public class AdminCreateUserHandler{
             ValidateToken.check(req.getHeader());
             ValidateAdmin.check(req.getHeader());
             
-            /*String token = req.getHeader().getToken();
-            
-            if(token == null){
-                throw new UnauthorizedAccessException();
-            }
-            
-            DecodedJWT decoded = JwtHelper.verify(token);
-            if(!JwtHelper.getAdminStatus(token)){
-                throw new UnauthorizedAccessException();
-            }*/
-            
             User user = controller.cadastrarUsuario(req.getPayload().getNome(), req.getPayload().getEmail()
-                    , req.getPayload().getSenha(), req.getPayload().getRegistro(), req.getPayload().isTipo());
+                    , req.getPayload().getSenha(), req.getPayload().isTipo());
             
             if(user == null){
                 throw new BadRequestException(400,"Server internal error: unable to register user");
@@ -63,7 +57,9 @@ public class AdminCreateUserHandler{
         } catch (JsonSyntaxException e) {
             throw new BadRequestException(e.getMessage());
         } catch (SQLException e){
-            throw new BadRequestException(500,"Internal Server error: "+e.getMessage());
+            throw new BadRequestException(e.getErrorCode(),e.getMessage());
+        } catch (ConstraintViolated e){
+            throw new BadRequestException(e.getMessage());            
         }
     }
     

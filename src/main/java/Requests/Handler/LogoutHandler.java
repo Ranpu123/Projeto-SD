@@ -16,18 +16,22 @@ import jwt.JwtHelper;
 import Response.LogoutResponse;
 
 import Exception.*;
+import Misc.ConstraintViolated;
 import Misc.ValidateAdmin;
 import Misc.ValidateToken;
+import Misc.ValidationHelper;
 /**
  *
  * @author vinic
  */
 public class LogoutHandler {
-    public static Response<?> hangleLogout(String jsonRequest) throws ServerResponseException{
+    public static Response<?> handle(String jsonRequest) throws ServerResponseException{
         Gson gson = new Gson();
         
         try {
             LogoutRequest req = gson.fromJson(jsonRequest, LogoutRequest.class);
+            
+            ValidationHelper.validate(req);
             
             if (req == null || req.getHeader() == null){
                 throw new BadRequestException(500,"Server internal error: unable to get request.");
@@ -39,6 +43,8 @@ public class LogoutHandler {
             
             return res;
         } catch (JsonSyntaxException e) {
+            throw new BadRequestException(e.getMessage());
+        }catch(ConstraintViolated e){
             throw new BadRequestException(e.getMessage());
         }
     }

@@ -31,9 +31,10 @@ public class UserController {
         return user;
     }
     
-    public User cadastrarUsuario(String nome, String email, String senha, int registro, boolean tipo) throws SQLException{
-        User user = new User(registro, email, senha, nome, tipo);
+    public User cadastrarUsuario(String nome, String email, String senha, boolean tipo) throws SQLException{
+        User user = new User(email, senha, nome, tipo);
         dao.incluirUsuario(user);
+        user = dao.autenticar(email, senha);
         return user;
     }
     

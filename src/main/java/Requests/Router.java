@@ -33,14 +33,17 @@ public class Router {
         
         switch (op) {
             case RequestOperations.LOGIN:
-                res = LoginHandler.handleLogin(jsonRequest);
+                res = LoginHandler.handle(jsonRequest);
                 return res;
             case RequestOperations.LOGOUT:
-                res = LogoutHandler.hangleLogout(jsonRequest);
+                res = LogoutHandler.handle(jsonRequest);
                 return res;
             case RequestOperations.ADMIN_CADASTRAR_USUARIO:
                 res = AdminCreateUserHandler.handle(jsonRequest);
                 return res;
+            case RequestOperations.ADMIN_ATUALIZAR_USUARIO:
+                //TODO
+                return null;
             default:
                 throw new BadRequestException(op + " operation is unsupported.");
         }

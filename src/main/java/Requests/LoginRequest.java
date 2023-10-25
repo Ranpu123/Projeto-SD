@@ -1,9 +1,12 @@
 package Requests;
 
 import Model.Header;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 public class LoginRequest extends Request<LoginRequest.Payload> {
-
+    
     public LoginRequest(String email, String senha) {
         super(new Header(null, RequestOperations.LOGIN), new Payload(email, senha));
     }
@@ -13,7 +16,9 @@ public class LoginRequest extends Request<LoginRequest.Payload> {
     }
     
     public static class Payload{
+        @Email
         private String email;
+        @NotBlank(message = "A senha não pode estar vazia.")
         private String senha;
 
         public Payload(String email, String senha) {

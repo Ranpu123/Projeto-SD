@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Requests;
 
 import Model.Header;
@@ -9,40 +5,44 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-/**
- *
- * @author vinic
- */
-public class AdminCreateUserRequest extends Request<AdminCreateUserRequest.Payload>{  
+public class AdminUpdateUserRequest extends Request<AdminUpdateUserRequest.Payload>{
 
-    public AdminCreateUserRequest(String token, String nome, String email, String senha, Boolean tipo) {
-        super(new Header(token, RequestOperations.ADMIN_CADASTRAR_USUARIO),
-                new Payload(nome, email, senha, tipo));
+    public AdminUpdateUserRequest(String token, Integer registro, String nome, String email, String senha, Boolean tipo) {
+        super(new Header(token,RequestOperations.ADMIN_ATUALIZAR_USUARIO), 
+                new Payload(registro, nome, email, senha, tipo));
     }
     
-    public AdminCreateUserRequest(Header header,@NotNull @Valid Payload payload) {
+    public AdminUpdateUserRequest(Header header,@NotNull @Valid Payload payload) {
         super(header, payload);
-    }    
-    
+    }
+
     public static class Payload{
-        @NotBlank(message = "Nome não pode estar vazio.")
+        @Positive
+        private int registro;
         @Size(min = 3, max = 255, message = "Nome deve conter entre 3 e 255 caracteres.")
         private String nome;
-        @NotBlank(message = "Email não pode estar vazio.")
         @Email
         private String email;
-        @NotBlank(message = "Senha não pode estar vazio.")
         private String senha;
-        @NotNull(message = "Tipo não pode ser nulo")
         private boolean tipo;
 
-        public Payload(String nome, String email, String senha, Boolean tipo) {
+        public Payload(int registro, String nome, String email, String senha, boolean tipo) {
+            this.registro = registro;
             this.nome = nome;
             this.email = email;
             this.senha = senha;
             this.tipo = tipo;
+        }
+
+        public int getRegistro() {
+            return registro;
+        }
+
+        public void setRegistro(int registro) {
+            this.registro = registro;
         }
 
         public String getNome() {
@@ -69,13 +69,12 @@ public class AdminCreateUserRequest extends Request<AdminCreateUserRequest.Paylo
             this.senha = senha;
         }
 
-        public boolean isTipo() {
+        public boolean getTipo() {
             return tipo;
         }
 
         public void setTipo(boolean tipo) {
             this.tipo = tipo;
         }
-        
     }
 }

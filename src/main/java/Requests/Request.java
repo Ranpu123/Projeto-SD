@@ -5,6 +5,7 @@
 package Requests;
 
 import Model.Header;
+import jakarta.validation.Valid;
 
 /**
  *
@@ -13,7 +14,7 @@ import Model.Header;
  */
 public class Request<T> {
     private Header header;
-    private T payload;
+    private @Valid T payload;
 
     public Request(Header header, T payload) {
         this.header = header;
