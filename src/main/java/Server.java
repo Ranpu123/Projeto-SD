@@ -17,6 +17,7 @@ import javax.security.auth.login.LoginContext;
 import Exception.ServerResponseException;
 import java.net.SocketOption;
 import java.net.SocketOptions;
+import java.util.Scanner;
 import java.util.Set;
 
 /*
@@ -37,9 +38,18 @@ public class Server extends Thread {
     }
     
     public static void main(String[] args){
-
-        try (ServerSocket serverSocket = new ServerSocket(24800)) {
-            System.out.println("Connection Socket Created");
+        Integer porta = 0;
+        
+        Scanner scan = new Scanner(System.in);
+        System.err.print("Informe a porta: ");
+        porta = scan.nextInt();
+        
+        if(porta == 0 || porta == null){
+            porta = 24800;
+        }
+        
+        try (ServerSocket serverSocket = new ServerSocket(porta)) {
+            System.out.println("Connection Socket Created: "+serverSocket.getLocalPort());
             
             while (true) {
                 try {
@@ -64,10 +74,10 @@ public class Server extends Thread {
              PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         ){
-            
+            System.err.println("Connected to: "+clientSocket.getInetAddress()+"\n");
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
-                System.out.println("Recebido: " + inputLine);
+                System.out.println("Recebido From["+clientSocket.getInetAddress()+"]: " + inputLine);
                 Response<?> response;
 
                 try {
@@ -78,10 +88,11 @@ public class Server extends Thread {
                 
                 if(clientSocket.isClosed()){
                     System.out.println("DESCONECTADO A FORÇA...");
+                    break;
                 }
                 
                 String jsonResponse = JsonHelper.toJson(response);
-                System.out.println("Enviado: " + jsonResponse);
+                System.out.println("Enviado To["+clientSocket.getInetAddress()+"]: "+ jsonResponse+"\n");
                 out.println(jsonResponse);
                 
                 if(response instanceof LogoutResponse){

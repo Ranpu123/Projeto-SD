@@ -1,16 +1,19 @@
 package Response;
 
-import jakarta.validation.constraints.*;
+public class CreateUserResponse implements Response<CreateUserResponse.Payload>{
 
-public class AdminUpdateUserResponse implements Response<AdminUpdateUserResponse.Payload>{
-    
     private Payload payload;
 
-    public AdminUpdateUserResponse(Integer registro, String nome, String email, Boolean tipo) {
+    public CreateUserResponse(Integer registro, String nome, String email, Boolean tipo) {
         this.payload = new Payload(registro, nome, email, tipo);
     }
     
-    public class Payload{
+    @Override
+    public Payload payload() {
+        return payload;
+    }
+    
+    public static class Payload{
         private Integer registro;
         private String nome;
         private String email;
@@ -54,10 +57,5 @@ public class AdminUpdateUserResponse implements Response<AdminUpdateUserResponse
         public void setTipo(Boolean tipo) {
             this.tipo = tipo;
         }
-    }
-    
-    @Override
-    public Payload payload() {
-        return payload;
     }
 }

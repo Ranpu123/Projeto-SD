@@ -13,10 +13,10 @@ public class User {
     private String email;
     private String senha;
     private String nome;
-    private boolean tipo;
+    private Boolean tipo;
     private String token;
 
-    public User(int registro, String email, String senha, String nome, boolean tipo, int id, String token) {
+    public User(int registro, String email, String senha, String nome, Boolean tipo, String token) {
         this.registro = registro;
         this.email = email;
         this.senha = senha;
@@ -25,15 +25,13 @@ public class User {
         this.token = token;
     }
 
-    public User(String email, String senha, String nome, boolean tipo) {
+    public User(String email, String senha, String nome, Boolean tipo) {
         this.email = email;
         this.senha = senha;
         this.nome = nome;
         this.tipo = tipo;
     }
-    
-    
-    
+
     public User(){
     }
     
@@ -69,11 +67,11 @@ public class User {
         this.nome = nome;
     }
 
-    public boolean isTipo() {
+    public Boolean isTipo() {
         return tipo;
     }
 
-    public void setTipo(boolean tipo) {
+    public void setTipo(Boolean tipo) {
         this.tipo = tipo;
     }
 

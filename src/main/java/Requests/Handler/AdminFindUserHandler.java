@@ -5,35 +5,27 @@
 package Requests.Handler;
 
 import Controller.UserController;
-import Exception.*;
 import Misc.ConstraintViolated;
+import Misc.ValidationHelper;
+import Exception.*;
 import Misc.Database;
 import Misc.ValidateAdmin;
 import Misc.ValidateToken;
-import Misc.ValidationHelper;
 import Model.User;
+
 import Response.Response;
-import Requests.AdminCreateUserRequest;
+import Response.AdminFindUserResponse;
+import Requests.AdminFindUserRequest;
 import Requests.Request;
-import Response.AdminCreateUserResponse;
-import com.auth0.jwt.interfaces.DecodedJWT;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import java.sql.SQLException;
-import jwt.JwtHelper;
 
-/**
- *
- * @author vinic
- */
-public class AdminCreateUserHandler{
-    public static Response<?> handle(String jsonRequest)throws ServerResponseException{
+public class AdminFindUserHandler {
+    public static Response<?> handle(String jsonRequest) throws ServerResponseException{
         Gson gson = new Gson();
         
         try {
-            Request<AdminCreateUserRequest.Payload> req = gson.fromJson(jsonRequest, AdminCreateUserRequest.class);
-            
+            Request<AdminFindUserRequest.Payload> req = gson.fromJson(jsonRequest, AdminFindUserRequest.class);
             ValidationHelper.validate(req);
             
             UserController controller = new UserController(Database.getConnection());
@@ -45,22 +37,19 @@ public class AdminCreateUserHandler{
             ValidateToken.check(req.getHeader());
             ValidateAdmin.check(req.getHeader());
             
-            User user = controller.cadastrarUsuario(req.getPayload().getNome(), req.getPayload().getEmail()
-                    , req.getPayload().getSenha(), true);
+            User user = controller.buscarUsuario(req.getPayload().getRegistro());
             
             if(user == null){
-                throw new BadRequestException(400,"Server internal error: unable to register user");
+                throw new ResourceNotFoundException(""+req.getPayload().getRegistro());
             }
             
-            AdminCreateUserResponse res = new AdminCreateUserResponse(user.getRegistro(), user.getNome(), user.getEmail(), user.isTipo());
+            AdminFindUserResponse res = new AdminFindUserResponse(user.getNome(), user.getEmail(), 
+                    user.getRegistro(), user.isTipo());
             return res;
-        } catch (JsonSyntaxException e) {
+        } catch (ConstraintViolated e) {
             throw new BadRequestException(e.getMessage());
         } catch (SQLException e){
             throw new BadRequestException(e.getErrorCode(),e.getMessage());
-        } catch (ConstraintViolated e){
-            throw new BadRequestException(e.getMessage());            
         }
     }
-    
 }

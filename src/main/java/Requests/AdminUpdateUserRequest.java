@@ -21,15 +21,15 @@ public class AdminUpdateUserRequest extends Request<AdminUpdateUserRequest.Paylo
 
     public static class Payload{
         @Positive
-        private int registro;
+        private Integer registro;
         @Size(min = 3, max = 255, message = "Nome deve conter entre 3 e 255 caracteres.")
         private String nome;
         @Email
         private String email;
         private String senha;
-        private boolean tipo;
+        private Boolean tipo;
 
-        public Payload(int registro, String nome, String email, String senha, boolean tipo) {
+        public Payload(Integer registro, String nome, String email, String senha, Boolean tipo) {
             this.registro = registro;
             this.nome = nome;
             this.email = email;
@@ -37,11 +37,11 @@ public class AdminUpdateUserRequest extends Request<AdminUpdateUserRequest.Paylo
             this.tipo = tipo;
         }
 
-        public int getRegistro() {
+        public Integer getRegistro() {
             return registro;
         }
 
-        public void setRegistro(int registro) {
+        public void setRegistro(Integer registro) {
             this.registro = registro;
         }
 
@@ -69,11 +69,11 @@ public class AdminUpdateUserRequest extends Request<AdminUpdateUserRequest.Paylo
             this.senha = senha;
         }
 
-        public boolean getTipo() {
+        public Boolean getTipo() {
             return tipo;
         }
 
-        public void setTipo(boolean tipo) {
+        public void setTipo(Boolean tipo) {
             this.tipo = tipo;
         }
     }

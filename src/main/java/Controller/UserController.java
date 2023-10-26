@@ -8,6 +8,8 @@ import DAO.UserDAO;
 import Model.User;
 import java.sql.Connection;
 import java.sql.SQLException;
+import Exception.*;
+import java.util.List;
 
 /**
  *
@@ -25,9 +27,9 @@ public class UserController {
         return user;
     }
     
-    public User atualizarToken(String token, User user) throws SQLException{
+    public User atualizarToken(String token, User user) throws SQLException, ServerResponseException{
         user.setToken(token);
-        dao.atualizarUsuario(user);
+        dao.atualizarToken(user.getRegistro(), token);
         return user;
     }
     
@@ -38,5 +40,21 @@ public class UserController {
         return user;
     }
     
+    public User atualizarUsuario(int registro, String nome, String email, String senha, Boolean tipo) throws SQLException, ServerResponseException{
+        User user = new User(email, senha, nome, tipo);
+        user.setRegistro(registro);
+        dao.atualizarUsuario(user);
+        user = dao.buscarUsuario(registro);
+        return user;
+    }
     
+    public User buscarUsuario(int registro)throws SQLException{
+        User user = dao.buscarUsuario(registro);
+        return user;
+    }
+    
+    public List<User> listarUsuarios() throws SQLException{
+        List<User> usuarios = dao.listarUsuarios();
+        return usuarios;
+    }
 }

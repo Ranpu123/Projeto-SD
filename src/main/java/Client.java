@@ -15,12 +15,19 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 
 public class Client {
     public static void main(String[] args) {
         String serverHost = "localhost";
         int port = 24800;
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.print("Informe o IP do servidor: ");
+        serverHost = scan.nextLine();
+        System.out.print("Informe a Porta do servidor: ");
+        port = scan.nextInt();
 
         try (Socket echoSocket = new Socket(serverHost, port);
              PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
@@ -96,17 +103,16 @@ public class Client {
                     return makeRequest(stdin, token, LoginRequest.class);
                 case RequestOperations.LOGOUT:
                     return makeRequest(stdin, token, LogoutRequest.class);
+                case RequestOperations.CADASTRAR_USUARIO:
+                    return makeRequest(stdin, token, CreateUserRequest.class);
                 case RequestOperations.ADMIN_BUSCAR_USUARIOS:
-                    throw new UnsupportedOperationException();
-                    //return makeRequest(stdin, token, AdminFindUsersRequest.class);
+                    return makeRequest(stdin, token, AdminFindUsersRequest.class);
                 case RequestOperations.ADMIN_BUSCAR_USUARIO:
-                    throw new UnsupportedOperationException();
-                    //return makeRequest(stdin, token, AdminFindUserRequest.class);
+                    return makeRequest(stdin, token, AdminFindUserRequest.class);
                 case RequestOperations.ADMIN_CADASTRAR_USUARIO:
                     return makeRequest(stdin, token, AdminCreateUserRequest.class);
                 case RequestOperations.ADMIN_ATUALIZAR_USUARIO:
-                    throw new UnsupportedOperationException();
-                    //return makeRequest(stdin, token, AdminUpdateUserRequest.class);
+                    return makeRequest(stdin, token, AdminUpdateUserRequest.class);
                 case RequestOperations.ADMIN_DELETAR_USUARIO:
                     throw new UnsupportedOperationException();
                     //return makeRequest(stdin, token, AdminDeleteUserRequest.class);
@@ -124,19 +130,22 @@ public class Client {
             if (clazz == LogoutRequest.class) {
                 response = JsonHelper.fromJson(json, LogoutResponse.class);
             }
-            /*if (clazz == AdminFindUsersRequest.class) {
-                response = JsonHelper.fromJson(json, FindUsersResponse.class);
+            if (clazz == CreateUserRequest.class) {
+                response = JsonHelper.fromJson(json, CreateUserResponse.class);
+            }
+            if (clazz == AdminFindUsersRequest.class) {
+                response = JsonHelper.fromJson(json, AdminFindUsersResponse.class);
             }
             if (clazz == AdminFindUserRequest.class) {
-                response = JsonHelper.fromJson(json, FindUserResponse.class);
-            }*/
+                response = JsonHelper.fromJson(json, AdminFindUserResponse.class);
+            }
             if (clazz == AdminCreateUserRequest.class) {
                 response = JsonHelper.fromJson(json, AdminCreateUserResponse.class);
             }
-            /*if (clazz == AdminUpdateUserRequest.class) {
+            if (clazz == AdminUpdateUserRequest.class) {
                 response = JsonHelper.fromJson(json, AdminUpdateUserResponse.class);
             }
-            if (clazz == AdminDeleteUserRequest.class) {
+            /*if (clazz == AdminDeleteUserRequest.class) {
                 response = JsonHelper.fromJson(json, AdminDeleteUserResponse.class);
             }*/
 

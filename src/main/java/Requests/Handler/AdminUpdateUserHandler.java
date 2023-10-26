@@ -5,7 +5,8 @@
 package Requests.Handler;
 
 import Controller.UserController;
-import Exception.*;
+import Exception.BadRequestException;
+import Exception.ServerResponseException;
 import Misc.ConstraintViolated;
 import Misc.Database;
 import Misc.ValidateAdmin;
@@ -13,29 +14,24 @@ import Misc.ValidateToken;
 import Misc.ValidationHelper;
 import Model.User;
 import Response.Response;
-import Requests.AdminCreateUserRequest;
+import Requests.AdminUpdateUserRequest;
 import Requests.Request;
 import Response.AdminCreateUserResponse;
-import com.auth0.jwt.interfaces.DecodedJWT;
-
+import Response.AdminUpdateUserResponse;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import java.sql.SQLException;
-import jwt.JwtHelper;
 
 /**
  *
  * @author vinic
  */
-public class AdminCreateUserHandler{
+public class AdminUpdateUserHandler {
     public static Response<?> handle(String jsonRequest)throws ServerResponseException{
         Gson gson = new Gson();
         
         try {
-            Request<AdminCreateUserRequest.Payload> req = gson.fromJson(jsonRequest, AdminCreateUserRequest.class);
-            
+            Request<AdminUpdateUserRequest.Payload> req = gson.fromJson(jsonRequest, AdminUpdateUserRequest.class);
             ValidationHelper.validate(req);
-            
             UserController controller = new UserController(Database.getConnection());
             
             if (req == null || req.getHeader() == null || req.getPayload() == null){
@@ -45,22 +41,20 @@ public class AdminCreateUserHandler{
             ValidateToken.check(req.getHeader());
             ValidateAdmin.check(req.getHeader());
             
-            User user = controller.cadastrarUsuario(req.getPayload().getNome(), req.getPayload().getEmail()
-                    , req.getPayload().getSenha(), true);
+            User user = controller.atualizarUsuario(req.getPayload().getRegistro(), 
+                    req.getPayload().getNome(), req.getPayload().getEmail(), req.getPayload().getSenha(), req.getPayload().getTipo());
             
             if(user == null){
                 throw new BadRequestException(400,"Server internal error: unable to register user");
             }
             
-            AdminCreateUserResponse res = new AdminCreateUserResponse(user.getRegistro(), user.getNome(), user.getEmail(), user.isTipo());
+            AdminUpdateUserResponse res = new AdminUpdateUserResponse(user.getRegistro(), user.getNome(), user.getEmail(), user.isTipo());
+            
             return res;
-        } catch (JsonSyntaxException e) {
-            throw new BadRequestException(e.getMessage());
+        } catch (ConstraintViolated e) {
+            throw new BadRequestException(e.getMessage());      
         } catch (SQLException e){
-            throw new BadRequestException(e.getErrorCode(),e.getMessage());
-        } catch (ConstraintViolated e){
-            throw new BadRequestException(e.getMessage());            
+            throw new BadRequestException(e.getErrorCode(),e.getMessage());   
         }
     }
-    
 }

@@ -1,20 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Response;
 
 import Model.Header;
 
-/**
- *
- * @author vinic
- */
+
 public class AdminCreateUserResponse implements Response<AdminCreateUserResponse.Payload>{
     
     private Payload payload;
     
-    public AdminCreateUserResponse(int registro, String nome, String email, boolean tipo) {
+    public AdminCreateUserResponse(Integer registro, String nome, String email, Boolean tipo) {
         this.payload = new Payload(registro, nome, email, tipo);
     }
 
@@ -24,23 +17,23 @@ public class AdminCreateUserResponse implements Response<AdminCreateUserResponse
     }
     
     public static class Payload{
-        private int registro;
+        private Integer registro;
         private String nome;
         private String email;
-        private boolean tipo;
+        private Boolean tipo;
 
-        public Payload(int registro, String nome, String email, boolean tipo) {
+        public Payload(Integer registro, String nome, String email, Boolean tipo) {
             this.registro = registro;
             this.nome = nome;
             this.email = email;
             this.tipo = tipo;
         }
 
-        public int getRegistro() {
+        public Integer getRegistro() {
             return registro;
         }
 
-        public void setRegistro(int registro) {
+        public void setRegistro(Integer registro) {
             this.registro = registro;
         }
 
@@ -60,11 +53,11 @@ public class AdminCreateUserResponse implements Response<AdminCreateUserResponse
             this.email = email;
         }
 
-        public boolean isTipo() {
+        public Boolean isTipo() {
             return tipo;
         }
 
-        public void setTipo(boolean tipo) {
+        public void setTipo(Boolean tipo) {
             this.tipo = tipo;
         }
         

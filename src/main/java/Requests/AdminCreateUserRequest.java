@@ -35,8 +35,7 @@ public class AdminCreateUserRequest extends Request<AdminCreateUserRequest.Paylo
         private String email;
         @NotBlank(message = "Senha não pode estar vazio.")
         private String senha;
-        @NotNull(message = "Tipo não pode ser nulo")
-        private boolean tipo;
+        private Boolean tipo;
 
         public Payload(String nome, String email, String senha, Boolean tipo) {
             this.nome = nome;
@@ -69,11 +68,11 @@ public class AdminCreateUserRequest extends Request<AdminCreateUserRequest.Paylo
             this.senha = senha;
         }
 
-        public boolean isTipo() {
+        public Boolean isTipo() {
             return tipo;
         }
 
-        public void setTipo(boolean tipo) {
+        public void setTipo(Boolean tipo) {
             this.tipo = tipo;
         }
         

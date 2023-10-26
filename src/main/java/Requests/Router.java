@@ -16,6 +16,10 @@ import Requests.Handler.AdminCreateUserHandler;
 
 import Exception.BadRequestException;
 import Exception.ServerResponseException;
+import Requests.Handler.AdminFindUserHandler;
+import Requests.Handler.AdminFindUsersHandler;
+import Requests.Handler.AdminUpdateUserHandler;
+import Requests.Handler.CreateUserHandler;
 
 
 /**
@@ -26,7 +30,7 @@ public class Router {
     public static Response<?> handleRequest(String jsonRequest)throws ServerResponseException{
         Gson gson = new Gson();
         Request<JsonObject> request = gson.fromJson(jsonRequest, Request.class);
-        System.out.println(request.getHeader().getOperation());
+        //System.out.println("\n"+request.getHeader().getOperation()+"\n");
         String op = request.getHeader().getOperation();
         
         Response<?> res;
@@ -42,8 +46,17 @@ public class Router {
                 res = AdminCreateUserHandler.handle(jsonRequest);
                 return res;
             case RequestOperations.ADMIN_ATUALIZAR_USUARIO:
-                //TODO
-                return null;
+                res = AdminUpdateUserHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.ADMIN_BUSCAR_USUARIO:
+                res = AdminFindUserHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.ADMIN_BUSCAR_USUARIOS:
+                res = AdminFindUsersHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.CADASTRAR_USUARIO:
+                res = CreateUserHandler.handle(jsonRequest);
+                return res;
             default:
                 throw new BadRequestException(op + " operation is unsupported.");
         }
