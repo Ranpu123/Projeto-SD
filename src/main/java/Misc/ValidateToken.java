@@ -4,11 +4,14 @@
  */
 package Misc;
 
+import Controller.UserController;
 import Model.Header;
 import Exception.*;
+import Model.User;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import java.sql.SQLException;
 import jwt.JwtHelper;
 
 /**
@@ -16,8 +19,9 @@ import jwt.JwtHelper;
  * @author vinic
  */
 public class ValidateToken {
-    public static void check(Header header) throws ServerResponseException{
+    public static void check(Header header) throws ServerResponseException, SQLException{
         String token = header.getToken();
+        UserController controller = new UserController(Database.getConnection());
         if (token == null){
             throw new UnauthorizedAccessException();
         }
@@ -31,7 +35,8 @@ public class ValidateToken {
         
         Claim registro = jwt.getClaim("userId");
         Claim isAdmin = jwt.getClaim("isAdmin");
-        if(registro.isMissing()||registro.isNull()||isAdmin.isNull()||isAdmin.isMissing()){
+        User user = controller.buscarUsuario(registro.asInt());
+        if(registro.isMissing()||registro.isNull()||isAdmin.isNull()||isAdmin.isMissing()|| user == null){
             throw new UnauthorizedAccessException();
         }
     }

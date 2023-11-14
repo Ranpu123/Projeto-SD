@@ -40,11 +40,11 @@ public class UserDAO extends GenericDAO<User> {
         });
     }
 
-    public void removerUsuario(User user) throws SQLException {
+    public void removerUsuario(int registro) throws SQLException {
         String sql = "DELETE FROM usuarios WHERE registro = ?";
 
         remover(sql, statement->{
-            statement.setInt(1,user.getRegistro());
+            statement.setInt(1,registro);
         });
     }
 
@@ -139,5 +139,17 @@ public class UserDAO extends GenericDAO<User> {
             statement.setString(1, token);
             statement.setInt(2, registro);
         });
+    }
+    
+    public int totalAdm() throws SQLException{
+        String sql = "SELECT * FROM usuarios WHERE tipo = 1;";
+        
+        List<User> adms = listar(sql, resultSet -> {
+            User user = new User();
+            user.setRegistro(resultSet.getInt("registro"));
+            return user;
+        });
+        
+        return adms.size();
     }
 }

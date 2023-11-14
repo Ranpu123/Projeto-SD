@@ -1,49 +1,42 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Requests;
 
 import Model.Header;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-public class AdminUpdateUserRequest extends Request<AdminUpdateUserRequest.Payload>{
-
-    public AdminUpdateUserRequest(String token, Integer registro, String nome, String email, String senha, Boolean tipo) {
-        super(new Header(token,RequestOperations.ADMIN_ATUALIZAR_USUARIO), 
-                new Payload(registro, nome, email, senha, tipo));
+/**
+ *
+ * @author vinic
+ */
+public class UpdateUserRequest extends Request<UpdateUserRequest.Payload>{
+    
+    public UpdateUserRequest(String token, String nome, String email, String senha) {
+        super(new Header(token,RequestOperations.ATUALIZAR_USUARIO), 
+                new Payload(nome, email, senha));
     }
     
-    public AdminUpdateUserRequest(Header header,@NotNull @Valid Payload payload) {
+    public UpdateUserRequest(Header header,@NotNull @Valid Payload payload) {
         super(header, payload);
     }
-
+    
     public static class Payload{
-        @Positive
-        @NotNull
-        private Integer registro;
         @Size(min = 3, max = 255, message = "Nome deve conter entre 3 e 255 caracteres.")
         private String nome;
         @Email
         private String email;
         private String senha;
-        private Boolean tipo;
 
-        public Payload(Integer registro, String nome, String email, String senha, Boolean tipo) {
-            this.registro = registro;
+        public Payload(String nome, String email, String senha) {
             this.nome = nome;
             this.email = email;
             this.senha = senha;
-            this.tipo = tipo;
-        }
-
-        public Integer getRegistro() {
-            return registro;
-        }
-
-        public void setRegistro(Integer registro) {
-            this.registro = registro;
         }
 
         public String getNome() {
@@ -68,14 +61,6 @@ public class AdminUpdateUserRequest extends Request<AdminUpdateUserRequest.Paylo
 
         public void setSenha(String senha) {
             this.senha = senha;
-        }
-
-        public Boolean getTipo() {
-            return tipo;
-        }
-
-        public void setTipo(Boolean tipo) {
-            this.tipo = tipo;
         }
     }
 }

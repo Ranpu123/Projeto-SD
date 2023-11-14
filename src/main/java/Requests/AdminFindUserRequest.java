@@ -25,6 +25,7 @@ public class AdminFindUserRequest extends Request<AdminFindUserRequest.Payload>{
     
     public static class Payload{
         @Positive
+        @NotNull
         Integer registro;
 
         public Payload(Integer registro) {

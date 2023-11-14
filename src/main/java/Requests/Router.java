@@ -16,10 +16,14 @@ import Requests.Handler.AdminCreateUserHandler;
 
 import Exception.BadRequestException;
 import Exception.ServerResponseException;
+import Requests.Handler.AdminDeleteUserHandler;
 import Requests.Handler.AdminFindUserHandler;
 import Requests.Handler.AdminFindUsersHandler;
 import Requests.Handler.AdminUpdateUserHandler;
 import Requests.Handler.CreateUserHandler;
+import Requests.Handler.DeleteUserHandler;
+import Requests.Handler.FindUserHandler;
+import Requests.Handler.UpdateUserHandler;
 
 
 /**
@@ -54,8 +58,20 @@ public class Router {
             case RequestOperations.ADMIN_BUSCAR_USUARIOS:
                 res = AdminFindUsersHandler.handle(jsonRequest);
                 return res;
+            case RequestOperations.ADMIN_DELETAR_USUARIO:
+                res = AdminDeleteUserHandler.handle(jsonRequest);
+                return res;
             case RequestOperations.CADASTRAR_USUARIO:
                 res = CreateUserHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.ATUALIZAR_USUARIO:
+                res = UpdateUserHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.BUSCAR_USUARIO:
+                res = FindUserHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.DELETAR_USUARIO:
+                res = DeleteUserHandler.handle(jsonRequest);
                 return res;
             default:
                 throw new BadRequestException(op + " operation is unsupported.");

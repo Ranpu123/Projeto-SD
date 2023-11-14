@@ -13,27 +13,28 @@ import Misc.ValidateAdmin;
 import Misc.ValidateToken;
 import Misc.ValidationHelper;
 import Model.User;
-import Response.Response;
-import Requests.AdminUpdateUserRequest;
+import Requests.AdminCreateUserRequest;
+import Requests.AdminDeleteUserRequest;
 import Requests.Request;
-import Response.AdminCreateUserResponse;
-import Response.AdminUpdateUserResponse;
-import com.auth0.jwt.JWT;
+import Response.AdminDeleteUserResponse;
+import Response.Response;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import java.sql.SQLException;
-import jwt.JwtHelper;
 
 /**
  *
  * @author vinic
  */
-public class AdminUpdateUserHandler {
+public class AdminDeleteUserHandler {
     public static Response<?> handle(String jsonRequest)throws ServerResponseException{
         Gson gson = new Gson();
         
         try {
-            Request<AdminUpdateUserRequest.Payload> req = gson.fromJson(jsonRequest, AdminUpdateUserRequest.class);
+            Request<AdminDeleteUserRequest.Payload> req = gson.fromJson(jsonRequest, AdminDeleteUserRequest.class);
+            
             ValidationHelper.validate(req);
+            
             UserController controller = new UserController(Database.getConnection());
             
             if (req == null || req.getHeader() == null || req.getPayload() == null){
@@ -43,24 +44,23 @@ public class AdminUpdateUserHandler {
             ValidateToken.check(req.getHeader());
             ValidateAdmin.check(req.getHeader());
             
-            if(controller.quantidadeAdm() < 2 && req.getPayload().getTipo() != null && req.getPayload().getTipo() == false){
-                throw new BadRequestException(500,"Não é possível remover privilégios do último administrador.");
+            if(controller.quantidadeAdm()>1){
+                User user = controller.deletarUsuario(req.getPayload().getRegistro());
+                if (user == null){
+                    throw new BadRequestException("Não foi possível encontrar o usuário.");
+                }
+            }else{
+                throw new BadRequestException("Usuário é o último administrador.");
             }
             
-            User user = controller.atualizarUsuario(req.getPayload().getRegistro(), 
-                    req.getPayload().getNome(), req.getPayload().getEmail(), req.getPayload().getSenha(), req.getPayload().getTipo());
-            
-            if(user == null){
-                throw new BadRequestException(400,"Server internal error: unable to register user");
-            }
-            
-            AdminUpdateUserResponse res = new AdminUpdateUserResponse(user.getRegistro(), user.getNome(), user.getEmail(), user.isTipo());
-            
+            AdminDeleteUserResponse res = new AdminDeleteUserResponse("Usuário deletado com sucesso: "+req.getPayload().getRegistro());
             return res;
-        } catch (ConstraintViolated e) {
-            throw new BadRequestException(e.getMessage());      
+        } catch (JsonSyntaxException e) {
+            throw new BadRequestException(e.getMessage());
         } catch (SQLException e){
-            throw new BadRequestException(e.getErrorCode(),e.getMessage());   
+            throw new BadRequestException(e.getErrorCode(),e.getMessage());
+        } catch (ConstraintViolated e){
+            throw new BadRequestException(e.getMessage());            
         }
     }
 }

@@ -57,4 +57,14 @@ public class UserController {
         List<User> usuarios = dao.listarUsuarios();
         return usuarios;
     }
+    
+    public int quantidadeAdm() throws SQLException{
+        return dao.totalAdm();
+    }
+    
+    public User deletarUsuario(int registro) throws SQLException{
+        User user = dao.buscarUsuario(registro);
+        dao.removerUsuario(registro);
+        return user;
+    }
 }

@@ -105,6 +105,12 @@ public class Client {
                     return makeRequest(stdin, token, LogoutRequest.class);
                 case RequestOperations.CADASTRAR_USUARIO:
                     return makeRequest(stdin, token, CreateUserRequest.class);
+                case RequestOperations.ATUALIZAR_USUARIO:
+                    return makeRequest(stdin, token, UpdateUserRequest.class);
+                case RequestOperations.BUSCAR_USUARIO:
+                    return makeRequest(stdin, token, FindUserRequest.class);
+                case RequestOperations.DELETAR_USUARIO:
+                    return makeRequest(stdin, token, DeleteUserRequest.class);
                 case RequestOperations.ADMIN_BUSCAR_USUARIOS:
                     return makeRequest(stdin, token, AdminFindUsersRequest.class);
                 case RequestOperations.ADMIN_BUSCAR_USUARIO:
@@ -114,8 +120,7 @@ public class Client {
                 case RequestOperations.ADMIN_ATUALIZAR_USUARIO:
                     return makeRequest(stdin, token, AdminUpdateUserRequest.class);
                 case RequestOperations.ADMIN_DELETAR_USUARIO:
-                    throw new UnsupportedOperationException();
-                    //return makeRequest(stdin, token, AdminDeleteUserRequest.class);
+                    return makeRequest(stdin, token, AdminDeleteUserRequest.class);
             }
         }
     }
@@ -133,6 +138,15 @@ public class Client {
             if (clazz == CreateUserRequest.class) {
                 response = JsonHelper.fromJson(json, CreateUserResponse.class);
             }
+            if (clazz == UpdateUserRequest.class) {
+                response = JsonHelper.fromJson(json, UpdateUserResponse.class);
+            }
+            if (clazz == FindUserRequest.class) {
+                response = JsonHelper.fromJson(json, FindUserResponse.class);
+            }
+            if (clazz == DeleteUserRequest.class) {
+                response = JsonHelper.fromJson(json, DeleteUserResponse.class);
+            }
             if (clazz == AdminFindUsersRequest.class) {
                 response = JsonHelper.fromJson(json, AdminFindUsersResponse.class);
             }
@@ -145,9 +159,10 @@ public class Client {
             if (clazz == AdminUpdateUserRequest.class) {
                 response = JsonHelper.fromJson(json, AdminUpdateUserResponse.class);
             }
-            /*if (clazz == AdminDeleteUserRequest.class) {
+            if (clazz == AdminDeleteUserRequest.class) {
                 response = JsonHelper.fromJson(json, AdminDeleteUserResponse.class);
-            }*/
+            }
+            
 
             if (response == null || response.payload() == null) {
                 response = JsonHelper.fromJson(json, ErrorResponse.class);

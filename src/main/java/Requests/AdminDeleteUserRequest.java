@@ -27,6 +27,7 @@ public class AdminDeleteUserRequest extends Request<AdminDeleteUserRequest.Paylo
     
     public static class Payload{
         @Positive
+        @NotNull
         private Integer registro;
 
         public Payload(Integer registro) {
