@@ -20,9 +20,17 @@ import Requests.Handler.AdminDeleteUserHandler;
 import Requests.Handler.AdminFindUserHandler;
 import Requests.Handler.AdminFindUsersHandler;
 import Requests.Handler.AdminUpdateUserHandler;
+import Requests.Handler.CreatePOIHandler;
+import Requests.Handler.CreateSegmentHandler;
 import Requests.Handler.CreateUserHandler;
+import Requests.Handler.DeletePOIHandler;
+import Requests.Handler.DeleteSegmentHandler;
 import Requests.Handler.DeleteUserHandler;
+import Requests.Handler.FindPOIsHandler;
+import Requests.Handler.FindSegmentsHandler;
 import Requests.Handler.FindUserHandler;
+import Requests.Handler.UpdatePOIHandler;
+import Requests.Handler.UpdateSegmentHandler;
 import Requests.Handler.UpdateUserHandler;
 
 
@@ -72,6 +80,30 @@ public class Router {
                 return res;
             case RequestOperations.DELETAR_USUARIO:
                 res = DeleteUserHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.CADASTRAR_PDI:
+                res = CreatePOIHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.ATUALIZAR_PDI:
+                res = UpdatePOIHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.BUSCAR_PDIS:
+                res = FindPOIsHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.DELETAR_PDI:
+                res = DeletePOIHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.CADASTRAR_SEGMENTO:
+                res = CreateSegmentHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.ATUALIZAR_SEGMENTO:
+                res = UpdateSegmentHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.BUSCAR_SEGMENTOS:
+                res = FindSegmentsHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.DELETAR_SEGMENTO:
+                res = DeleteSegmentHandler.handle(jsonRequest);
                 return res;
             default:
                 throw new BadRequestException(op + " operation is unsupported.");

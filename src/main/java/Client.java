@@ -121,6 +121,22 @@ public class Client {
                     return makeRequest(stdin, token, AdminUpdateUserRequest.class);
                 case RequestOperations.ADMIN_DELETAR_USUARIO:
                     return makeRequest(stdin, token, AdminDeleteUserRequest.class);
+                case RequestOperations.CADASTRAR_PDI:
+                    return makeRequest(stdin, token, CreatePOIRequest.class);
+                case RequestOperations.ATUALIZAR_PDI:
+                    return makeRequest(stdin, token, UpdatePOIRequest.class);
+                case RequestOperations.BUSCAR_PDIS:
+                    return makeRequest(stdin, token, FindPOIsRequest.class);
+                case RequestOperations.DELETAR_PDI:
+                    return makeRequest(stdin, token, DeletePOIRequest.class);
+                case RequestOperations.CADASTRAR_SEGMENTO:
+                    return makeRequest(stdin, token, CreateSegmentRequest.class);
+                case RequestOperations.ATUALIZAR_SEGMENTO:
+                    return makeRequest(stdin, token, UpdateSegmentRequest.class);
+                case RequestOperations.BUSCAR_SEGMENTOS:
+                    return makeRequest(stdin, token, FindSegmentsRequest.class);
+                case RequestOperations.DELETAR_SEGMENTO:
+                    return makeRequest(stdin, token, DeleteSegmentRequest.class);
             }
         }
     }
@@ -161,6 +177,30 @@ public class Client {
             }
             if (clazz == AdminDeleteUserRequest.class) {
                 response = JsonHelper.fromJson(json, AdminDeleteUserResponse.class);
+            }
+            if (clazz == CreatePOIRequest.class) {
+                response = JsonHelper.fromJson(json, CreatePOIResponse.class);
+            }
+            if (clazz == UpdatePOIRequest.class) {
+                response = JsonHelper.fromJson(json, UpdatePOIResponse.class);
+            }
+            if (clazz == FindPOIsRequest.class) {
+                response = JsonHelper.fromJson(json, FindPOIsResponse.class);
+            }
+            if (clazz == DeletePOIRequest.class) {
+                response = JsonHelper.fromJson(json, DeletePOIResponse.class);
+            }
+            if (clazz == CreateSegmentRequest.class) {
+                response = JsonHelper.fromJson(json, CreateSegmentResponse.class);
+            }
+            if (clazz == UpdateSegmentRequest.class) {
+                response = JsonHelper.fromJson(json, UpdateSegmentResponse.class);
+            }
+            if (clazz == FindSegmentsRequest.class) {
+                response = JsonHelper.fromJson(json, FindSegmentsResponse.class);
+            }
+            if (clazz == DeleteSegmentRequest.class) {
+                response = JsonHelper.fromJson(json, DeleteSegmentResponse.class);
             }
             
 
@@ -216,6 +256,8 @@ public class Client {
                     constructorArguments[i] = Integer.parseInt(line);
                 } else if (parameters[i].getType() == Boolean.class) {
                     constructorArguments[i] = Boolean.parseBoolean(line);
+                } else if (parameters[i].getType() == Double.class) {
+                    constructorArguments[i] = Double.parseDouble(line);
                 } else {
                     constructorArguments[i] = line;
                 }

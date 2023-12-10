@@ -4,6 +4,8 @@
  */
 package Response;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  *
  * @author vinic
@@ -64,5 +66,13 @@ public class FindUserResponse implements Response<FindUserResponse.Payload> {
         public void setTipo(Boolean tipo) {
             this.tipo = tipo;
         }
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
+        }
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

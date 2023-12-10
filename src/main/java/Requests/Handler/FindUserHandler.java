@@ -33,7 +33,7 @@ public class FindUserHandler {
             ValidationHelper.validate(req);
             UserController controller = new UserController(Database.getConnection());
             
-            if (req == null || req.getHeader() == null || req.getPayload() == null){
+            if (req == null || req.getHeader() == null){
                 throw new BadRequestException(500,"Server internal error: unable to get request.");
             }
             

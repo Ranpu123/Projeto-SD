@@ -37,7 +37,7 @@ public class LogoutHandler {
                 throw new BadRequestException(500,"Server internal error: unable to get request.");
             }
             
-            ValidateToken.check(req.getHeader());
+            //ValidateToken.check(req.getHeader());
             
             LogoutResponse res = new LogoutResponse("desconectado");
             

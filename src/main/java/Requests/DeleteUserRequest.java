@@ -7,6 +7,7 @@ package Requests;
 import Model.Header;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  *
@@ -48,5 +49,13 @@ public class DeleteUserRequest extends Request<DeleteUserRequest.Payload> {
         public void setSenha(String senha) {
             this.senha = senha;
         }
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
+        }
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

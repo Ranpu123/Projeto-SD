@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  *
@@ -75,6 +76,13 @@ public class AdminCreateUserRequest extends Request<AdminCreateUserRequest.Paylo
         public void setTipo(Boolean tipo) {
             this.tipo = tipo;
         }
-        
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
+        }
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

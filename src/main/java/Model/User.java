@@ -4,6 +4,8 @@
  */
 package Model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  *
  * @author vinic
@@ -81,5 +83,9 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

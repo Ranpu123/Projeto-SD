@@ -8,6 +8,7 @@ import Model.Header;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  *
@@ -39,5 +40,13 @@ public class AdminFindUserRequest extends Request<AdminFindUserRequest.Payload>{
         public void setRegistro(Integer registro) {
             this.registro = registro;
         }
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
+        }
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

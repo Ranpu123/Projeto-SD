@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class AdminUpdateUserRequest extends Request<AdminUpdateUserRequest.Payload>{
 
@@ -77,5 +78,13 @@ public class AdminUpdateUserRequest extends Request<AdminUpdateUserRequest.Paylo
         public void setTipo(Boolean tipo) {
             this.tipo = tipo;
         }
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
+        }
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

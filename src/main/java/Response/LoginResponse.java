@@ -4,6 +4,8 @@
  */
 package Response;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  *
  * @author vinic
@@ -35,5 +37,16 @@ public class LoginResponse implements Response<LoginResponse.Payload>{
         public void setToken(String token) {
             this.token = token;
         }
+        
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
+        }
     }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
+    
 }

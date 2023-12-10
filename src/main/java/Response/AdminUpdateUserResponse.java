@@ -1,6 +1,7 @@
 package Response;
 
 import jakarta.validation.constraints.*;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class AdminUpdateUserResponse implements Response<AdminUpdateUserResponse.Payload>{
     
@@ -54,10 +55,18 @@ public class AdminUpdateUserResponse implements Response<AdminUpdateUserResponse
         public void setTipo(Boolean tipo) {
             this.tipo = tipo;
         }
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
+        }
     }
     
     @Override
     public Payload payload() {
         return payload;
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

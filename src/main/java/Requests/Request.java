@@ -6,6 +6,7 @@ package Requests;
 
 import Model.Header;
 import jakarta.validation.Valid;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  *
@@ -37,5 +38,9 @@ public class Request<T> {
         this.payload = payload;
     }
     
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+    }
     
 }

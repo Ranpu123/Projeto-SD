@@ -4,6 +4,7 @@ import Model.Header;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class LoginRequest extends Request<LoginRequest.Payload> {
     
@@ -41,5 +42,13 @@ public class LoginRequest extends Request<LoginRequest.Payload> {
         public void setSenha(String senha) {
             this.senha = senha;
         }
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
+        }
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

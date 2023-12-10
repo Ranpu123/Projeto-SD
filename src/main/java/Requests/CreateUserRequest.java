@@ -4,6 +4,7 @@ import Model.Header;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class CreateUserRequest extends Request<CreateUserRequest.Payload>{
 
@@ -62,5 +63,13 @@ public class CreateUserRequest extends Request<CreateUserRequest.Payload>{
         public void setTipo(Boolean tipo) {
             this.tipo = tipo;
         }
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
+        }
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

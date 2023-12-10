@@ -2,6 +2,7 @@ package Response;
 
 import Model.User;
 import java.util.List;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class AdminFindUsersResponse implements Response<AdminFindUsersResponse.Payload>{
     private Payload payload;
@@ -29,5 +30,13 @@ public class AdminFindUsersResponse implements Response<AdminFindUsersResponse.P
         public void setUsuarios(List<User> usuarios) {
             this.usuarios = usuarios;
         }
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
+        }
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

@@ -1,5 +1,7 @@
 package Response;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class LogoutResponse implements Response<LogoutResponse.Payload>{
     
     private Payload payload;
@@ -26,6 +28,14 @@ public class LogoutResponse implements Response<LogoutResponse.Payload>{
 
         public void setMensagem(String mensagem) {
             this.mensagem = mensagem;
+        }
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
         }        
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

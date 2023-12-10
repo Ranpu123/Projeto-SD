@@ -4,6 +4,8 @@
  */
 package Model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  *
  * @author vinic
@@ -31,5 +33,10 @@ public class Header {
 
     public void setOperation(String operation) {
         this.operation = operation;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

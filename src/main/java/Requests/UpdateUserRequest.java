@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  *
@@ -62,5 +63,13 @@ public class UpdateUserRequest extends Request<UpdateUserRequest.Payload>{
         public void setSenha(String senha) {
             this.senha = senha;
         }
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
+        }
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

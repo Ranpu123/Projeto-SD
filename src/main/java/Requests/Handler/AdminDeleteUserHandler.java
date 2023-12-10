@@ -21,6 +21,7 @@ import Response.Response;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.sql.SQLException;
+import jwt.JwtHelper;
 
 /**
  *
@@ -44,13 +45,13 @@ public class AdminDeleteUserHandler {
             ValidateToken.check(req.getHeader());
             ValidateAdmin.check(req.getHeader());
             
-            if(controller.quantidadeAdm()>1){
+            if(controller.quantidadeAdm() < 2 && req.getPayload().getRegistro() == JwtHelper.getId(req.getHeader().getToken())){
+                throw new BadRequestException("Usuário é o último administrador.");
+            }else{
                 User user = controller.deletarUsuario(req.getPayload().getRegistro());
                 if (user == null){
                     throw new BadRequestException("Não foi possível encontrar o usuário.");
                 }
-            }else{
-                throw new BadRequestException("Usuário é o último administrador.");
             }
             
             AdminDeleteUserResponse res = new AdminDeleteUserResponse("Usuário deletado com sucesso: "+req.getPayload().getRegistro());

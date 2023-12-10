@@ -1,6 +1,7 @@
 package Response;
 
 import Model.Header;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 
 public class AdminCreateUserResponse implements Response<AdminCreateUserResponse.Payload>{
@@ -60,6 +61,13 @@ public class AdminCreateUserResponse implements Response<AdminCreateUserResponse
         public void setTipo(Boolean tipo) {
             this.tipo = tipo;
         }
-        
+        @Override
+        public String toString() {
+            return ToStringBuilder.reflectionToString(this);
+        }
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }
