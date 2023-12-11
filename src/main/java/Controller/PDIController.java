@@ -118,12 +118,12 @@ public class PDIController {
     } 
     
     private List<Comando> processarRota(List<Segmento> segmentos, List<PDI> pdis){
-       List<Comando> comandos = new ArrayList();
+        List<Comando> comandos = new ArrayList();
        
-       Vec2 curdir = Vec2.directionTo(pdis.get(0).getPosicao().toVec(), pdis.get(1).getPosicao().toVec());
-       comandos.add(new Comando(pdis.get(0).getNome(), pdis.get(1).getNome(), segmentos.get(0).getDistancia(), segmentos.get(0).getAviso(), "Frente"));
+        Vec2 curdir = Vec2.directionTo(pdis.get(0).getPosicao().toVec(), pdis.get(1).getPosicao().toVec());
+        comandos.add(new Comando(pdis.get(0).getNome(), pdis.get(1).getNome(), segmentos.get(0).getDistancia(), segmentos.get(0).getAviso(), "Frente"));
        
-       for(int i = 1; i < pdis.size()-1; i++){
+        for(int i = 1; i < pdis.size()-1; i++){
             PDI org = pdis.get(i);
             PDI dst = pdis.get(i+1);
 
@@ -145,10 +145,11 @@ public class PDIController {
             Comando comando = new Comando(org.getNome(), dst.getNome(), seg.getDistancia(), seg.getAviso(), dir);
             comandos.add(comando);
             curdir = nextDir;
-       }
+        }
        
-       comandos.add(new Comando(pdis.get(pdis.size()-1).getNome(), null, 0.0, "Chegou ao seu destino!", null));
+        comandos.add(new Comando(pdis.get(pdis.size()-1).getNome(), null, 0.0, "Chegou ao seu destino!", null));
        
-       return comandos;
+        return comandos;
     }
 }
+    

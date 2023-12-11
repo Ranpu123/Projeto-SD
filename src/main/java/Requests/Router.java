@@ -27,6 +27,7 @@ import Requests.Handler.DeletePOIHandler;
 import Requests.Handler.DeleteSegmentHandler;
 import Requests.Handler.DeleteUserHandler;
 import Requests.Handler.FindPOIsHandler;
+import Requests.Handler.FindRouteHandler;
 import Requests.Handler.FindSegmentsHandler;
 import Requests.Handler.FindUserHandler;
 import Requests.Handler.UpdatePOIHandler;
@@ -104,6 +105,9 @@ public class Router {
                 return res;
             case RequestOperations.DELETAR_SEGMENTO:
                 res = DeleteSegmentHandler.handle(jsonRequest);
+                return res;
+            case RequestOperations.BUSCAR_ROTA:
+                res = FindRouteHandler.handle(jsonRequest);
                 return res;
             default:
                 throw new BadRequestException(op + " operation is unsupported.");

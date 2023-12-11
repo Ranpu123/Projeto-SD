@@ -5,6 +5,7 @@ import Requests.*;
 import Model.Header;
 import Response.*;
 import Exception.*;
+import Model.Comando;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -70,7 +72,16 @@ public class Client {
                 if (response == null) {
                     continue;
                 }
-
+                
+                if (response instanceof FindRouteResponse){
+                    System.err.println("NOME ATUAL | NOME PROXIMO | DISTANCIA | AVISO | DIRECAO |");
+                    List<Comando> comandos = ((FindRouteResponse) response).payload().getComandos();
+                    for(Comando comando : comandos){
+                        System.err.println(comando.getNome_inicio()+" | "+comando.getNome_final()+" | "+comando.getDistancia()+" |"
+                                + " "+comando.getAviso()+" | "+comando.getDirecao()+" |");
+                    }
+                }
+                
                 if (response instanceof LoginResponse) {
                     token = ((LoginResponse) response).payload().getToken();
                     System.out.println("token was set");
@@ -137,6 +148,8 @@ public class Client {
                     return makeRequest(stdin, token, FindSegmentsRequest.class);
                 case RequestOperations.DELETAR_SEGMENTO:
                     return makeRequest(stdin, token, DeleteSegmentRequest.class);
+                case RequestOperations.BUSCAR_ROTA:
+                    return makeRequest(stdin, token, FindRouteRequest.class);    
             }
         }
     }
@@ -201,6 +214,9 @@ public class Client {
             }
             if (clazz == DeleteSegmentRequest.class) {
                 response = JsonHelper.fromJson(json, DeleteSegmentResponse.class);
+            }
+            if (clazz == FindRouteRequest.class) {
+                response = JsonHelper.fromJson(json, FindRouteResponse.class);
             }
             
 
