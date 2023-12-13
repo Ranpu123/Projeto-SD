@@ -83,9 +83,10 @@ public class PDI {
         this.id = id;
     }
     
+    
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return this.nome;
     }
     
 }

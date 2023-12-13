@@ -33,6 +33,14 @@ public class User {
         this.nome = nome;
         this.tipo = tipo;
     }
+    
+    public User(int registro, String email, String senha, String nome, Boolean tipo) {
+        this.registro = registro;
+        this.email = email;
+        this.senha = senha;
+        this.nome = nome;
+        this.tipo = tipo;
+    }
 
     public User(){
     }

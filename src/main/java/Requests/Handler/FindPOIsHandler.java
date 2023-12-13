@@ -41,7 +41,7 @@ public class FindPOIsHandler {
             }
             
             ValidateToken.check(req.getHeader());
-            ValidateAdmin.check(req.getHeader());
+            //ValidateAdmin.check(req.getHeader());
 
             List<PDI> pdis = controller.buscarPDIs();
             
