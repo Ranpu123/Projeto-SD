@@ -22,6 +22,10 @@ public class PdiCombo extends AbstractListModel<PDI> implements ComboBoxModel<PD
         this.pdis = new ArrayList<>();
     }
     
+    public List<PDI> getPdis(){
+        return this.pdis;
+    }
+    
     @Override
     public int getSize() {
         return pdis.size();

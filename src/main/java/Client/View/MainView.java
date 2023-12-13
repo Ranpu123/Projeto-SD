@@ -65,6 +65,8 @@ public class MainView extends javax.swing.JFrame {
         logoutBtn = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         rotaView1 = new Client.View.RotaView();
+        pdiView1 = new Client.View.PdiView();
+        segmentoView1 = new Client.View.SegmentoView();
         usuarioView1 = new Client.View.UsuarioView();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -90,6 +92,11 @@ public class MainView extends javax.swing.JFrame {
         pdiBtn.setMaximumSize(new java.awt.Dimension(105, 22));
         pdiBtn.setMinimumSize(new java.awt.Dimension(105, 22));
         pdiBtn.setPreferredSize(new java.awt.Dimension(105, 22));
+        pdiBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pdiBtnActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -152,7 +159,9 @@ public class MainView extends javax.swing.JFrame {
 
         mainPanel.setLayout(new java.awt.CardLayout());
         mainPanel.add(rotaView1, "card2");
-        mainPanel.add(usuarioView1, "card3");
+        mainPanel.add(pdiView1, "card4");
+        mainPanel.add(segmentoView1, "card4");
+        mainPanel.add(usuarioView1, "card5");
 
         getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
 
@@ -160,7 +169,11 @@ public class MainView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void segmentoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_segmentoBtnActionPerformed
-        // TODO add your handling code here:
+        mainPanel.removeAll();
+        segmentoView1 = new SegmentoView();
+        mainPanel.add(segmentoView1);
+        mainPanel.repaint();
+        mainPanel.revalidate();
     }//GEN-LAST:event_segmentoBtnActionPerformed
 
     private void rotaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotaBtnActionPerformed
@@ -189,6 +202,14 @@ public class MainView extends javax.swing.JFrame {
         mainPanel.repaint();
         mainPanel.revalidate();
     }//GEN-LAST:event_usuarioBtnActionPerformed
+
+    private void pdiBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdiBtnActionPerformed
+        mainPanel.removeAll();
+        pdiView1 = new PdiView();
+        mainPanel.add(pdiView1);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+    }//GEN-LAST:event_pdiBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,9 +250,11 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton logoutBtn;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton pdiBtn;
+    private Client.View.PdiView pdiView1;
     private javax.swing.JButton rotaBtn;
     private Client.View.RotaView rotaView1;
     private javax.swing.JButton segmentoBtn;
+    private Client.View.SegmentoView segmentoView1;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JButton usuarioBtn;
     private Client.View.UsuarioView usuarioView1;

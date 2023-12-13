@@ -157,13 +157,19 @@ public class RotaView extends javax.swing.JPanel {
                     }
                     List<PDI> pdis = new ArrayList<>();
                     pdis = ((FindPOIsResponse)res).payload().getPdis();
-                    for(int i = 0; i < pdis.size() ; i++){
-                        if(!pdis.get(i).getAcessivel()){
-                            pdis.remove(i);
+                    inicioPdi.updateData(pdis);
+                    
+                    List<PDI> pdisFiltrados = new ArrayList<>();
+                    pdisFiltrados.addAll(pdis);
+                    int n = pdisFiltrados.size();
+                    for(int i = 0; i < n ; i++){
+                        if(!pdisFiltrados.get(i).getAcessivel()){
+                            pdisFiltrados.remove(i);
                         }
                     }
-                    inicioPdi.updateData(pdis);
-                    finalPdi.updateData(pdis);
+                    
+                    finalPdi.updateData(pdisFiltrados);
+                    
                 }, errorLabel::setText);
             }
         });

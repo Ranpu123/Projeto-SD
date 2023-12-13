@@ -30,6 +30,7 @@ public class UsuarioView extends javax.swing.JPanel {
     public UsuarioView() {
         initComponents();
         atualizarTabela();
+        showAdmin();
         
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -45,7 +46,6 @@ public class UsuarioView extends javax.swing.JPanel {
                 }
             }
         });
-        
     }
 
     /**
@@ -126,7 +126,7 @@ public class UsuarioView extends javax.swing.JPanel {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 105;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel2.add(emailInput, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -134,7 +134,7 @@ public class UsuarioView extends javax.swing.JPanel {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 105;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel2.add(senhaInput, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -142,7 +142,7 @@ public class UsuarioView extends javax.swing.JPanel {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 105;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel2.add(nomeInput, gridBagConstraints);
 
@@ -215,6 +215,7 @@ public class UsuarioView extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         jPanel2.add(registroInput, gridBagConstraints);
 
@@ -324,11 +325,11 @@ public class UsuarioView extends javax.swing.JPanel {
     
     private void cadastrarUsuario(){
          HandleRequest.getInstance().makeRequest(new AdminCreateUserRequest(Session.getInstance().getToken() ,nomeInput.getText(), 
-                       emailInput.getText(), new String(senhaInput.getPassword()), ativoInput.isSelected()), (Response <?> res) -> {
-                           if(!(res instanceof AdminCreateUserResponse)){
-                               return;
-                           }
-               }, errorLabel::setText);
+                   emailInput.getText(), new String(senhaInput.getPassword()), ativoInput.isSelected()), (Response <?> res) -> {
+                       if(!(res instanceof AdminCreateUserResponse)){
+                           return;
+                       }
+           }, errorLabel::setText);
     }
     
     private void buscarUsuario(){
@@ -483,4 +484,18 @@ public class UsuarioView extends javax.swing.JPanel {
     private javax.swing.JTextField registroInput;
     private javax.swing.JPasswordField senhaInput;
     // End of variables declaration//GEN-END:variables
+    
+    private void showAdmin(){
+        if(!(JwtHelper.getAdminStatus(Session.getInstance().getToken()))){
+            buscaInput.setVisible(false);
+            buscaLabel.setVisible(false);
+            buscaBtn.setVisible(false);
+            cadastrarBtn.setVisible(false);
+            deletarBtn.setVisible(false);
+            deletarBtn.setVisible(false);
+            ativoInput.setVisible(false);
+            jLabel5.setVisible(false);
+        }
+    }
 }
+
