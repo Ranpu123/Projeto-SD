@@ -12,11 +12,11 @@ import java.util.Objects;
 
 public class UserConnected {
     private String ip;
-    private String email;
+    private String token;
 
-    public UserConnected(String ip, String email) {
+    public UserConnected(String ip, String token) {
         this.ip = ip;
-        this.email = email;
+        this.token = token;
     }
 
     public String getIp() {
@@ -27,12 +27,12 @@ public class UserConnected {
         this.ip = ip;
     }
 
-    public String getEmail() {
-        return email;
+    public String getToken() {
+        return token;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

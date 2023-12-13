@@ -49,7 +49,7 @@ public class UsersConnected {
          SwingUtilities.invokeLater(() -> {
             usersTableModel.setRowCount(0);
             for (UserConnected user : users) {
-                usersTableModel.addRow(new Object[]{user.getIp(), user.getEmail()});
+                usersTableModel.addRow(new Object[]{user.getIp(), user.getToken()});
             }
          });   
     }
