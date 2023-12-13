@@ -41,7 +41,7 @@ public class FindSegmentsHandler {
             }
             
             ValidateToken.check(req.getHeader());
-            ValidateAdmin.check(req.getHeader());
+            //ValidateAdmin.check(req.getHeader());
 
             List<Segmento> segmentos = controller.buscarSegmentos();
             

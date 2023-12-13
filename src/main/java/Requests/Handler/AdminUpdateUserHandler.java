@@ -43,7 +43,8 @@ public class AdminUpdateUserHandler {
             ValidateToken.check(req.getHeader());
             ValidateAdmin.check(req.getHeader());
             
-            if(controller.quantidadeAdm() < 2 && req.getPayload().getTipo() != null && req.getPayload().getTipo() == false){
+            
+            if(controller.quantidadeAdm() < 2 && req.getPayload().getTipo() == false && JwtHelper.getId(req.getHeader().getToken()) == req.getPayload().getRegistro()){
                 throw new BadRequestException(500,"Não é possível remover privilégios do último administrador.");
             }
             
